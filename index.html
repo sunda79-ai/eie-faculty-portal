@@ -1,0 +1,556 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Department Data Collection Portal</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f3f6fb;
+    color: #243447;
+}
+
+/* WELCOME / LOGIN PAGE */
+#welcome {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #09264b, #21639a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-box {
+    background: white;
+    width: 100%;
+    max-width: 440px;
+    padding: 35px;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 12px 40px #0003;
+}
+
+.logo {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+.login-box h1 {
+    color: #12345a;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.login-box .subtitle {
+    color: #607187;
+    line-height: 1.6;
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+
+.login-box h2 {
+    color: #174a7c;
+    font-size: 20px;
+    margin-bottom: 18px;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    padding: 13px 20px;
+    background: #174a7c;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    width: 100%;
+}
+
+button:hover {
+    background: #0b2a52;
+}
+
+#loginMessage {
+    color: #c62828;
+    margin-top: 12px;
+    font-size: 14px;
+    min-height: 18px;
+}
+
+.login-footer {
+    margin-top: 25px;
+    color: #778599;
+    font-size: 12px;
+}
+
+/* PORTAL */
+#portal {
+    display: none;
+}
+
+header {
+    background: #0b2a52;
+    color: white;
+    padding: 24px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+header h1 {
+    font-size: 22px;
+    line-height: 1.5;
+}
+
+header p {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.logout {
+    width: auto;
+    background: #ffffff;
+    color: #12345a;
+    white-space: nowrap;
+}
+
+.logout:hover {
+    background: #e4edf8;
+}
+
+.hero {
+    text-align: center;
+    padding: 45px 20px;
+    background: #eaf2fb;
+}
+
+.hero h2 {
+    color: #12345a;
+    font-size: 34px;
+    margin-bottom: 12px;
+}
+
+.hero p {
+    color: #52657b;
+    line-height: 1.7;
+}
+
+.container {
+    width: 92%;
+    max-width: 1200px;
+    margin: 35px auto;
+}
+
+.section {
+    margin-bottom: 45px;
+}
+
+.section h2 {
+    font-size: 25px;
+    margin-bottom: 20px;
+    color: #174a7c;
+}
+
+.section.student h2 {
+    color: #198754;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit, minmax(230px, 1fr)
+    );
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px 20px;
+    text-align: center;
+    border-top: 4px solid #174a7c;
+    box-shadow: 0 4px 15px #0000000d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card .icon {
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: #243b53;
+}
+
+.card p {
+    color: #65758b;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.card a {
+    display: inline-block;
+    text-decoration: none;
+    background: #174a7c;
+    color: white;
+    padding: 11px 22px;
+    border-radius: 7px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.card a:hover {
+    opacity: 0.85;
+}
+
+.student .card {
+    border-top-color: #198754;
+}
+
+.student .card a {
+    background: #198754;
+}
+
+.purple {
+    border-top-color: #7545bb !important;
+}
+.purple a {
+    background: #7545bb !important;
+}
+
+.orange {
+    border-top-color: #e76f21 !important;
+}
+.orange a {
+    background: #e76f21 !important;
+}
+
+.teal {
+    border-top-color: #168c91 !important;
+}
+.teal a {
+    background: #168c91 !important;
+}
+
+.red {
+    border-top-color: #cf4568 !important;
+}
+.red a {
+    background: #cf4568 !important;
+}
+
+.brown {
+    border-top-color: #996324 !important;
+}
+.brown a {
+    background: #996324 !important;
+}
+
+footer {
+    background: #0b2a52;
+    color: white;
+    text-align: center;
+    padding: 24px 15px;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+@media(max-width: 600px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero h2 {
+        font-size: 27px;
+    }
+
+    .login-box {
+        padding: 25px 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- WELCOME / LOGIN PAGE -->
+
+<section id="welcome">
+    <div class="login-box">
+
+        <div class="logo">🎓</div>
+
+        <h1>DEPARTMENT OF INSTRUMENTATION ENGINEERING</h1>
+
+        <p class="subtitle">
+            Welcome to the Department Data Collection Portal.
+            Please login to continue.
+        </p>
+
+        <h2>Portal Login</h2>
+
+        <form id="loginForm">
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter portal password"
+                aria-label="Portal password"
+                autocomplete="current-password"
+                required
+            >
+
+            <button type="submit">LOGIN →</button>
+        </form>
+
+        <p id="loginMessage" role="alert"></p>
+
+        <p class="login-footer">
+            For authorized academic and administrative use.
+        </p>
+
+    </div>
+</section>
+
+
+<!-- MAIN DATA COLLECTION PORTAL -->
+
+<div id="portal">
+
+<header>
+    <div>
+        <h1>DEPARTMENT OF INSTRUMENTATION ENGINEERING</h1>
+        <p>Academic Information Collection Portal</p>
+    </div>
+
+    <button class="logout" id="logoutBtn" type="button">
+        Logout
+    </button>
+</header>
+
+<section class="hero">
+    <h2>DATA COLLECTION PORTAL</h2>
+    <p>
+        Welcome! Please select the appropriate form
+        to submit your details.
+    </p>
+</section>
+
+<main class="container">
+
+<!-- STUDENT SECTION -->
+
+<section class="section student">
+    <h2>👨‍🎓 STUDENT DETAILS</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="icon">🎓</div>
+            <h3>MOOC Details</h3>
+            <p>Details of MOOCs completed by students.</p>
+            <a href="https://forms.gle/CyKYRU9FtHpBUEcV6"
+               rel="noopener noreferrer">Fill Form →</a>
+        </div>
+
+        <div class="card">
+            <div class="icon">💼</div>
+            <h3>Internship Details</h3>
+            <p>Details of internships completed by students.</p>
+            <a href="https://forms.gle/BFbMkDt9oUrScQFWA"
+               rel="noopener noreferrer">Fill Form →</a>
+        </div>
+
+        <div class="card">
+            <div class="icon">🏆</div>
+            <h3>Achievements</h3>
+            <p>Student achievements, awards and recognitions.</p>
+            <a href="https://forms.gle/t4QYxG4A9DgnN1fd8"
+               rel="noopener noreferrer">Fill Form →</a>
+        </div>
+
+	<div class="card">
+            <div class="icon">🔬</div>
+            <h3>Project and Seminar Details</h3>
+            <p>Main Project, Mini Project and Seminar</p>
+            <a href="https://forms.gle/bgYsYbySpdYa6jHQ7"
+               rel="noopener noreferrer">Fill Form →</a>
+        </div>
+
+	<div class="card">
+            <div class="icon">🏆</div>
+            <h3>Placements</h3>
+            <p>Details of Placements</p>
+            <a href="https://forms.gle/qHcXMwFx3buSAdPM7"
+               rel="noopener noreferrer">Fill Form →</a>
+        </div>
+
+	<div class="card">
+            <div class="icon">🏆</div>
+            <h3>Admission Details</h3>
+            <p>Details of Admission and Demography</p>
+            <a href="https://forms.gle/A3sTxhxEbSVEtsGbA"
+               rel="noopener noreferrer">Fill Form →</a>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- FACULTY SECTION -->
+
+<section class="section">
+    <h2>👨‍🏫 FACULTY DETAILS</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="icon">📚</div>
+            <h3>MOOC Details</h3>
+            <p>MOOCs completed by faculty members.</p>
+            <a href="https://forms.gle/TdHnZtMW7tini3ec7"
+               rel="noopener noreferrer">Fill Form →</a>
+        </div>
+
+        <div class="card">
+            <div class="icon">💡</div>
+            <h3>Active Learning Methods</h3>
+            <p>Active learning methods implemented in teaching.</p>
+            <a href="https://docs.google.com/spreadsheets/d/1_C6dCZinWkBlUqe3lH2zeLEY6vX-DKZkIY7htcTjI4c/edit?usp=sharing" target="_blank"
+               rel="noopener noreferrer">Fill Form →</a>
+        </div>
+
+        <div class="card purple">
+            <div class="icon">📄</div>
+            <h3>Publications</h3>
+            <p>Journal, conference and book publications.</p>
+            <a href="https://forms.gle/R9RGdRVKLw6QdjJi8"
+               rel="noopener noreferrer">Fill Form →</a>
+        </div>
+
+        <div class="card orange">
+            <div class="icon">🎓</div>
+            <h3>FDP / Training Details</h3>
+            <p>FDPs, workshops and training programmes attended.</p>
+            <a href="https://forms.gle/Bqmenv6Kg1n3BhZD6"
+               rel="noopener noreferrer">Fill Form →</a>
+        </div>
+
+        <div class="card teal">
+            <div class="icon">🔬</div>
+            <h3>Research & Consultancy</h3>
+            <p>Research projects, grants and consultancy details.</p>
+            <a href="https://forms.gle/qZn9nLqvowG46Z2J6"
+               rel="noopener noreferrer">Fill Form →</a>
+        </div>
+
+        <div class="card red">
+            <div class="icon">📅</div>
+            <h3>Activities Conducted</h3>
+            <p>Details of academic and departmental activities.</p>
+            <a href="https://forms.gle/Mm1CPwEFXZkJFns78"
+               rel="noopener noreferrer">Fill Form →</a>
+        </div>
+
+        <div class="card brown">
+            <div class="icon">🎤</div>
+            <h3>Resource Person Details</h3>
+            <p>Guest Lectures, Invited Talks and Resource Person Roles.</p>
+            <a href="https://forms.gle/FadDbF8f3xF4CJqr9"
+               rel="noopener noreferrer">Fill Form →</a>
+        </div>
+
+	<div class="card teal">
+            <div class="icon">🎤</div>
+            <h3>FDP Orgnized</h3>
+            <p>Organized FDP in Department Level.</p>
+            <a href="https://forms.gle/oUBiWWM3Rq7ZHji46"
+               rel="noopener noreferrer">Fill Form →</a>
+        </div>
+
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <p>
+        Information collected for academic and
+        administrative purposes.
+    </p>
+    <p>
+        © 2026 Department of Instrumentation Engineering
+    </p>
+</footer>
+
+</div>
+
+
+<script>
+/*
+  DEMO PASSWORD GATE ONLY.
+  Change this sample password before testing.
+*/
+const PORTAL_PASSWORD = "FISAT@2026";
+
+const welcome = document.getElementById("welcome");
+const portal = document.getElementById("portal");
+const loginForm = document.getElementById("loginForm");
+const passwordInput = document.getElementById("password");
+const loginMessage = document.getElementById("loginMessage");
+
+loginForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    if (passwordInput.value === PORTAL_PASSWORD) {
+        welcome.style.display = "none";
+        portal.style.display = "block";
+        loginMessage.textContent = "";
+        passwordInput.value = "";
+        window.scrollTo(0, 0);
+    } else {
+        loginMessage.textContent =
+            "Incorrect password. Please try again.";
+        passwordInput.value = "";
+        passwordInput.focus();
+    }
+});
+
+document.getElementById("logoutBtn").addEventListener("click",
+    function() {
+        portal.style.display = "none";
+        welcome.style.display = "flex";
+        passwordInput.value = "";
+        loginMessage.textContent = "";
+        window.scrollTo(0, 0);
+    }
+);
+</script>
+
+</body>
+</html>
